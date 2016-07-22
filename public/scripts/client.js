@@ -11,6 +11,24 @@
     vm.getAssignmentList = getAssignmentList;
     vm.removeAssignment = removeAssignment;
     vm.tempAssignment = '';
+    vm.inputTest = inputTest;
+
+    function inputReset() {
+      vm.assignmentNumber = '';
+      vm.studentName = '';
+      vm.score = '';
+    }
+    inputReset();
+
+    inputTest();
+    function inputTest() {
+      if (vm.assignmentNumber.length > 0 && vm.studentName.length > 0 && vm.score.length > 0) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
 
     function submitAssignment() {
       var sendData = {};
@@ -19,9 +37,8 @@
       sendData.studentName = vm.studentName;
       sendData.score = vm.score;
 
-      vm.assignmentNumber = '';
-      vm.studentName = '';
-      vm.score = '';
+      //reset input fields
+      inputReset();
 
       $http.post('/assignment/add', sendData).then(addSuccess, httpFailure);
     }
