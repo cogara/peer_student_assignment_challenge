@@ -11,36 +11,28 @@
     vm.getAssignmentList = getAssignmentList;
     vm.removeAssignment = removeAssignment;
     vm.tempAssignment = '';
-    vm.inputTest = inputTest;
+    vm.inputCheck = inputCheck;
 
-    function inputReset() {
-      vm.assignmentNumber = '';
-      vm.studentName = '';
-      vm.score = '';
-    }
+
     inputReset();
 
-    inputTest();
-    function inputTest() {
-      if (vm.assignmentNumber.length > 0 && vm.studentName.length > 0 && vm.score.length > 0) {
-        return true;
-      }
-      else {
-        return false;
-      }
-    }
+
 
     function submitAssignment() {
-      var sendData = {};
+      if (inputCheck()) {
+        var sendData = {};
+        sendData.assignmentNumber = vm.assignmentNumber;
+        sendData.studentName = vm.studentName;
+        sendData.score = vm.score;
 
-      sendData.assignmentNumber = vm.assignmentNumber;
-      sendData.studentName = vm.studentName;
-      sendData.score = vm.score;
+        //reset input fields
+        inputReset();
 
-      //reset input fields
-      inputReset();
+        $http.post('/assignment/add', sendData).then(addSuccess, httpFailure);
+      } else {
+        console.log('need more input');
+      }
 
-      $http.post('/assignment/add', sendData).then(addSuccess, httpFailure);
     }
 
     function getAssignmentList() {
@@ -80,7 +72,22 @@
       console.log('HTTP request failed');
     }
 
-  getAssignmentList();
+    function inputReset() {
+      vm.assignmentNumber = '';
+      vm.studentName = '';
+      vm.score = '';
+    }
+
+    function inputCheck() {
+      if (vm.assignmentNumber.length > 0 && vm.studentName.length > 0 && vm.score.length > 0) {
+        return true;
+      }
+      else {
+        return false;
+      }
+    }
+
+    getAssignmentList();
 
   //controller end tag
   };
