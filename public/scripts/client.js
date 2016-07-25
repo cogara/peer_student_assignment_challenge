@@ -4,7 +4,6 @@
     .module('assignmentApp',[])
     .controller('AssignmentController', AssignmentController);
 
-
   function AssignmentController($http) {
     let vm = this;
     vm.submitAssignment = submitAssignment;
@@ -30,7 +29,7 @@
 
         $http.post('/assignment/add', sendData).then(addSuccess, httpFailure);
       } else {
-        console.log('need more input');
+        alert('Missing Input Fields');
       }
 
     }
@@ -45,9 +44,7 @@
     }
 
     function getAssignmentSuccess(response) {
-      console.log(response);
       vm.assignmentList = response.data;
-      console.log('What is not found?', vm.assignmentList);
       if(!response.data) {
         console.log('No ID found');
       }
@@ -59,12 +56,10 @@
     }
 
     function addSuccess(response) {
-      console.log(response);
       getAssignmentList();
     }
 
     function removeSuccess(response) {
-      console.log('Assignment removed');
       getAssignmentList();
     }
 

@@ -2,31 +2,55 @@
 <html ng-app="assignmentApp">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="../styles/styles.css">
     <script src="../scripts/angular/angular.min.js" charset="utf-8"></script>
     <script src="../scripts/client.js" charset="utf-8"></script>
     <title></title>
   </head>
   <body ng-controller="AssignmentController as ac">
-    <h1>Hello World!</h1>
-    <input type="text" ng-model="ac.assignmentNumber" placeholder="Assignment Number" />
-    <input type="text" ng-model="ac.studentName" placeholder="Student Name" />
-    <input type="text" ng-model="ac.score" placeholder="Score"/>
-    <button ng-click="ac.submitAssignment()">Submit!</button><br /><br />
-    <input type="text" ng-model="ac.tempAssignment" placeholder="Optional Assignment ID">
-    <button ng-click="ac.getAssignmentList()">Get All Assignments</button>
-    <button ng-click="ac.inputCheck()">Test</button>
-    <ul>
-      <li ng-repeat="assignment in ac.assignmentList">
-        <ul>
-          <li>{{assignment._id}}</li>
-          <li>{{assignment.assignmentNumber}}</li>
-          <li>{{assignment.studentName}}</li>
-          <li>{{assignment.score}}</li>
-          <li>{{assignment.dateCompleted}}</li>
-        <button ng-click="ac.removeAssignment(assignment._id)">Remove Assignment</button>
-        </ul><br />
-      </li>
-    </ul>
-    <div ng-if="!ac.assignmentList">Assignment not found! :(</div>
+    <h1>Assignment Log</h1>
+    <div class="container">
+      <div class="add">
+        <h3>Add Assignment</h3>
+        <input class="add-input" type="text" ng-model="ac.assignmentNumber" placeholder="Assignment Number" />
+        <input class="add-input" type="text" ng-model="ac.studentName" placeholder="Student Name" />
+        <input class="add-input" type="text" ng-model="ac.score" placeholder="Score"/>
+        <button ng-click="ac.submitAssignment()">Submit!</button>
+      </div>
+      <div class="display">
+        <h3>Search Assignments</h3>
+        <input type="text" ng-model="ac.tempAssignment" placeholder="Optional: Enter ID">
+        <button ng-click="ac.getAssignmentList()">Get Assignment </button>
+        <ul class="assignments-list">
+          <li class="assignment" ng-repeat="assignment in ac.assignmentList">
+            <ul class="assignment-info-list">
+
+              <li class="assignment-info">
+                <div class="info-header"><h3>Assignment Number</h3></div>
+                <div class="info">{{assignment.assignmentNumber}}</div>
+              </li>
+              <li class="assignment-info">
+                <div class="info-header"><h3>Student Name</h3></div>
+                <div class="info">{{assignment.studentName}}</div>
+              </li>
+              <li class="assignment-info">
+                <div class="info-header"><h3>Score</h3></div>
+                <div class="info">{{assignment.score}}</div>
+              </li>
+              <li class="assignment-info">
+                <div class="info-header"><h3>Date Completed</h3></div>
+                <div class="info">{{assignment.dateCompleted}}</div>
+              </li>
+              <li class="assignment-info">
+                <div class="info-header"><h3>ID</h3></div>
+                <div class="info">{{assignment._id}}</div>
+              </li>
+              <button ng-click="ac.removeAssignment(assignment._id)">Remove Assignment</button>
+            </ul><br />
+          </li>
+        </ul>
+        <div ng-if="!ac.assignmentList">Assignment not found! :(</div>
+      </div>
+    </div>
   </body>
 </html>
